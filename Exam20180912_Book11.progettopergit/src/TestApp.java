@@ -1,0 +1,123 @@
+import java.util.ArrayList;
+
+import it.polito.oop.books.*;
+
+public final class TestApp {
+
+    public static void main(String[] args) throws BookException {
+        Book oop = new Book();
+//R1
+        oop.getTopic("Java").addSubTopic(oop.getTopic("Classes"));
+        oop.getTopic("Java").addSubTopic(oop.getTopic("Lambda expressions"));
+        oop.getTopic("Java").addSubTopic(oop.getTopic("Generics"));
+        oop.getTopic("Classes").addSubTopic(oop.getTopic("Inheritance"));
+        oop.getTopic("Classes").addSubTopic(oop.getTopic("Interfaces"));
+        oop.getTopic("Classes").addSubTopic(oop.getTopic("Abstract classes"));
+        oop.getTopic("Interfaces").addSubTopic(oop.getTopic("Functional Interfaces"));
+             
+        System.out.println("Topic " + oop.getTopic("Java")); // Topic Java
+        System.out.println("Subtopics " + oop.getTopic("Java").getSubTopics()); 
+        // Subtopics [Classes, Generics, Lambda expressions]
+//R2
+        Question q1;
+        q1 = oop.createQuestion("What is Java", oop.getTopic("Java"));
+        q1.addAnswer("A 1958 song by Allen Toussaint", false);
+        q1.addAnswer("A brand of Russian cigarettes", false);
+        q1.addAnswer("A breed of chicken from the United States", false);
+        q1.addAnswer("A British merchant and migrant ship (active: 1813-1939)", false);
+        q1.addAnswer("A slang term for coffee", true);
+        q1.addAnswer("A villain appearing in the DC Comics series Metamorpho", true);
+
+        System.out.println(q1.getCorrectAnswers());
+        // [A villain appearing in the DC Comics series Metamorpho, A slang term for
+        // coffee]
+
+        System.out.println(q1.getIncorrectAnswers());
+        // [A 1958 song by Allen Toussaint, A brand of Russian cigarettes, A breed of
+        // chicken from the United States, A British merchant and migrant ship (active:
+        // 1813-1939)]
+        
+        System.out.println(q1.numAnswers()); // 6
+    
+//R3        
+        TheoryChapter theory_1 = oop.createTheoryChapter("Java Fundamentals", 42,
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        theory_1.addTopic(oop.getTopic("Java"));
+        
+        
+        //DA ELIMINARE
+        TheoryChapter theory_2 = oop.createTheoryChapter("Ja Fundamentals", 5,
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        theory_2.addTopic(oop.getTopic("Ja"));
+        
+        
+        TheoryChapter theory_3 = oop.createTheoryChapter("Ja Fundamentals", 5,
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        theory_3.addTopic(oop.getTopic("Ja"));
+        
+        
+        
+        
+
+        System.out.println(theory_1.getTitle() + ": " + theory_1.getTopics());
+        // Java Fundamentals: [Abstract classes, Classes, Functional Interfaces,
+        // Generics, Inheritance, Interfaces, Java, Lambda expressions]
+
+        ExerciseChapter ex_1 = oop.createExerciseChapter("Problems", 42);
+        ex_1.addQuestion(q1);
+
+        Question q2;
+        q2 = oop.createQuestion("What are Functional Interfaces", oop.getTopic("Functional Interfaces"));
+        q2.addAnswer("Foo", true);
+        q2.addAnswer("Bar", false);
+        ex_1.addQuestion(q2);
+        
+        Question q2b;
+        q2b = oop.createQuestion("What are Functional Interfaces", oop.getTopic("Functional Interfaces"));
+        q2b.addAnswer("Foo", true);
+        q2b.addAnswer("Bar", false);
+        ex_1.addQuestion(q2b);
+
+        System.out.println(ex_1.getTopics()); //[Functional Interfaces, Java]
+
+//R4
+        System.out.println(oop.getAllTopics());
+        // [Abstract classes, Classes, Functional Interfaces, Generics, Inheritance,
+        // Interfaces, Java, Lambda expressions]
+
+        System.out.println(oop.checkTopics()); // true
+        
+        Question qx = oop.createQuestion("Foo", oop.getTopic("Zap"));
+        ex_1.addQuestion(qx);
+        System.out.println(oop.checkTopics()); // false
+
+        System.out.println(oop.questionOptions());
+        //{0=[Foo (Zap)], 2=[What are Functional Interfaces (Functional Interfaces), What are Functional Interfaces (Functional Interfaces)], 6=[What is Java (Java)]}
+
+        
+        System.out.println(oop.getlTC());
+        //DA eliminare APPLICARE AD UN LIBRO DI TEORIA
+        System.out.println(oop.getlEC());
+
+//R5        
+       
+        System.out.println("R5");
+        
+        Assignment e = oop.newAssignment("s123456", ex_1);
+        ArrayList<String> response = new ArrayList<>();
+        response.add("A slang term for coffee");
+        double score = e.addResponse(q1, response);  
+        System.out.println("Score for q1: " + score);  // 0.8333
+
+        
+        System.out.println(e.getTotalScore());
+        response = new ArrayList<>();
+        response.add("Foo");
+        score = e.addResponse(q2, response);
+        System.out.println("Score for q2: " + score); //1.0
+        System.out.println(e.getTotalScore());  
+
+        System.out.println("Total score for " + e.getID() + " : " + e.totalScore()); 
+        // Total score for s123456 : 1.8333333333333335
+    }
+}

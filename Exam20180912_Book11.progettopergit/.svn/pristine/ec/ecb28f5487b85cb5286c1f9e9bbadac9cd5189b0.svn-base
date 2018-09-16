@@ -1,0 +1,62 @@
+package it.polito.oop.books;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+
+public class Assignment {
+
+    private String ID;
+	private ExerciseChapter chapter;
+	List<String> lAnswerStud=new LinkedList<>();
+
+	
+	private int FP=0;
+	private int FN=0;
+	private int N=0;
+	private double sumPoint=0;
+
+	public Assignment(String iD, ExerciseChapter chapter) {
+    	this.ID=ID;
+    	this.chapter=chapter;
+    }
+
+	public String getID() {
+        return ID;
+    }
+
+    public ExerciseChapter getChapter() {
+        return chapter;
+    }
+
+    public double addResponse(Question q,List<String> answers) {
+    	//Prendo le risposte dello studente
+    	for(String s:answers) {
+    		lAnswerStud.add(s);    		
+    	}   	
+    	
+    	N=q.getCorrectAnswers().size();
+    
+      for(String lAS:lAnswerStud) {
+    	  
+    			if(q.getIncorrectAnswers().contains(lAS))	{
+    				FP++;
+    			}
+    			if(!q.getIncorrectAnswers().contains(lAS) && !q.getCorrectAnswers().contains(lAS)) {
+    				FN++;
+    			}
+    	}
+      
+        sumPoint+=sumPoint+(N-FP-FN)/N;
+        return (N-FP-FN)/N;
+        
+        
+    }
+    
+    public double totalScore() {
+        return sumPoint;
+    }
+
+}

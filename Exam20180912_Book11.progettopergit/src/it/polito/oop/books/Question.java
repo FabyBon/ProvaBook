@@ -1,0 +1,65 @@
+package it.polito.oop.books;
+
+import java.util.HashSet;
+
+import java.util.Set;
+
+public class Question {
+	
+	private String question;
+	private Topic topic;
+	long nTotale=0;
+	
+	
+	
+	Set<String> rCorrette=new HashSet<>();
+	Set<String> rIncorrette=new HashSet<>();
+	
+
+	public Question(String question,Topic topic) {
+		this.question=question;
+		this.topic=topic;
+	}
+	
+	public String getQuestion() {
+		return question;
+	}
+	
+	public Topic getMainTopic() {
+		return topic;
+	}
+
+	public void addAnswer(String answer, boolean correct) {
+		
+		if(correct==false) {
+			rIncorrette.add(answer);
+	
+		}		
+		
+		else {
+			rCorrette.add(answer);
+		
+			
+		}
+		nTotale++;
+		
+	}
+	
+    @Override
+    public String toString() {
+    	    
+        return question+" ("+topic+")";
+    }
+
+	public long numAnswers() {
+	    return nTotale;
+	}
+
+	public Set<String> getCorrectAnswers() {
+		return rCorrette;
+	}
+
+	public Set<String> getIncorrectAnswers() {
+        return rIncorrette;
+	}
+}
